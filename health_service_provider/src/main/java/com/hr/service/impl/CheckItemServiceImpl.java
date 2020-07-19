@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.hr.dao.CheckItemDao;
+import com.hr.entity.CheckItemDeleteFailException;
 import com.hr.entity.PageResult;
 import com.hr.entity.QueryPageBean;
 import com.hr.pojo.CheckItem;
@@ -35,5 +36,16 @@ public class CheckItemServiceImpl implements CheckItemService {
         //where条件后面拼接 查询的关键字
         Page<CheckItem> checkItemPage =  checkItemDao.findPage(queryString);
         return new PageResult(checkItemPage.getTotal(),checkItemPage.getResult());
+    }
+
+    //处理删除检查项的逻辑
+    public void deleteById(Integer id) throws CheckItemDeleteFailException {
+        //先判断 检查组-检查项 关联表中有没有检查项的数据, 如果多对多的关联表中有数据,则不能删除
+        Long count = checkItemDao.findCountByCheckItemid(id);
+        if(count > 0) {
+            //多对多的关联表中有检查项的数据
+            throw new CheckItemDeleteFailException();
+        }
+        checkItemDao.deleteById(id);
     }
 }

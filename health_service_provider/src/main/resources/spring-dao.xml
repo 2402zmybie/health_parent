@@ -23,8 +23,8 @@
         <property name="username" value="root" />
         <property name="password" value="123456" />
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <!--<property name="url" value="jdbc:mysql://192.168.136.128:3306/health" />-->
-        <property name="url" value="jdbc:mysql://localhost:3306/health" />
+        <property name="url" value="jdbc:mysql://192.168.136.128:3306/health" />
+        <!--<property name="url" value="jdbc:mysql://localhost:3306/health" />-->
     </bean>
     <!--spring和mybatis整合的工厂bean-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
