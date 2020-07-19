@@ -53,6 +53,6 @@ public class CheckItemController {
             }
             return new Result(false, MessageConstant.DELETE_CHECKITEM_FAIL);
         }
-        return new Result(false, MessageConstant.DELETE_CHECKITEM_SUCCESS);
+        return new Result(true, MessageConstant.DELETE_CHECKITEM_SUCCESS);
     }
 }
