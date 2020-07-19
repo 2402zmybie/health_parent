@@ -1,3 +1,13 @@
 父工程里面的依赖管理标签:
 dependencyManagement:  统一锁定jar包的版本, 只定义子工程需要的坐标版本而已, 子工程需要的坐标自己引入,
                       如果没有这个标签,那么子工程和父工程会引入一样的坐标,
+
+
+el-dialog:
+    <el-dialog title="新增检查项" :visible.sync="dialogFormVisible">  .sync修饰符: 相当于把一个单向绑定v-bind变成双向绑定
+    v-model ; 不是所有的组件都有,有的组件没有没有
+
+@RequestBody注解是把传过来的json对象封装成为实体类
+
+com.alibaba.dubbo.config.annotation.Service  @Service  dubbo服务注解
+com.alibaba.dubbo.config.annotation.Reference @Reference  引用dubbo服务
