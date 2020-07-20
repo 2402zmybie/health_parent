@@ -280,10 +280,23 @@
                 this.findPage();
             },
             methods: {
-                //编辑
+                //编辑确认
                 handleEdit() {
+                    this.dialogFormVisible4Edit = false;
+                    axios.post("/checkgroup/edit.do?checkitemIds=" + this.checkitemIds,this.formData).then((res) => {
+                        if(res.data.flag) {
+                            this.$message({
+                                type:'success',
+                                message: res.data.message
+                            })
+                        }else {
+                            this.$message.error(res.data.message);
+                        }
+                    }).finally(() => {
+                        this.findPage();
+                    })
                 },
-                //添加
+                //添加确定
                 handleAdd () {
                     this.dialogFormVisible = false;
                     //新增检查组和检查组勾选的检查项
@@ -337,9 +350,41 @@
                 },
                 // 弹出编辑窗口
                 handleUpdate(row) {
+                    //弹出编辑检查组的窗口
+                    this.dialogFormVisible4Edit = true;
+                    this.activeName = 'first';
+                    //查询检查组信息
+                    axios.get("/checkgroup/findById.do?id=" + row.id).then((res) => {
+                        if(res.data.flag) {
+                            this.formData = res.data.data;
+                        }else {
+                            this.$message.error(res.data.message)
+                        }
+                    });
+                    //查询所有检查项
+                    axios.get("/checkitem/findAll.do")
+                        .then((res) => {
+                            if(res.data.flag) {
+                                this.tableData = res.data.data;
+                                //根据检查项id查询当前检查组包含的检查项id, 用于页面复选框回显
+                                axios.get("/checkgroup/findCheckItemIdsByCheckGroupid.do?id=" + row.id)
+                                    .then((res) => {
+                                        if(res.data.flag) {
+                                            this.checkitemIds = res.data.data;
+                                        }else {
+                                            this.$message.error(res.data.message);
+                                        }
+                                    })
+                            }else {
+                                this.$message.error(res.data.message);
+                            }
+                        })
+
                 },
                 //切换页码
                 handleCurrentChange(currentPage) {
+                    this.pagination.currentPage = currentPage;
+                    this.findPage();
                 },
                 // 删除
                 handleDelete(row) {

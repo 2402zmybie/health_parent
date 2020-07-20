@@ -14,4 +14,12 @@ public interface CheckGroupDao {
     void setCheckGroupAndCheckItem(Map map);
 
     Page<CheckGroup> findByCondition(@Param(value = "queryString") String queryString);
+
+    CheckGroup findById(Integer id);
+
+    List<Integer> findCheckItemIdsByCheckGroupid(Integer id);
+
+    void edit(CheckGroup checkGroup);
+
+    void deleteAssoication(Integer id);
 }

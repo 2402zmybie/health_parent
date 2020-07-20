@@ -26,4 +26,43 @@
         </if>
     </select>
 
+    <select id="findById" parameterType="int" resultType="com.hr.pojo.CheckGroup">
+        select * from t_checkgroup where id = #{ id }
+    </select>
+
+
+    <select id="findCheckItemIdsByCheckGroupid" parameterType="int" resultType="int">
+        select checkitem_id from t_checkgroup_checkitem where checkgroup_id = #{ id }
+    </select>
+
+
+    <update id="edit" parameterType="com.hr.pojo.CheckGroup">
+        update t_checkgroup
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="code != null">
+                code = #{code},
+            </if>
+            <if test="helpCode != null">
+                helpCode = #{helpCode},
+            </if>
+            <if test="attention != null">
+                attention = #{attention},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAssoication" parameterType="int">
+        delete from t_checkgroup_checkitem where checkgroup_id = #{id}
+    </delete>
+
 </mapper>
