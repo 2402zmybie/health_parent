@@ -12,6 +12,8 @@ import com.hr.service.CheckItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * 检查项服务
  */
@@ -34,7 +36,7 @@ public class CheckItemServiceImpl implements CheckItemService {
         //完成分页查询, 基于mybatis提供的分页助手,会在sql后面拼接
         PageHelper.startPage(currentPage,pageSize);
         //where条件后面拼接 查询的关键字
-        Page<CheckItem> checkItemPage =  checkItemDao.findPage(queryString);
+        Page<CheckItem> checkItemPage = checkItemDao.findPage(queryString);
         return new PageResult(checkItemPage.getTotal(),checkItemPage.getResult());
     }
 
@@ -47,5 +49,17 @@ public class CheckItemServiceImpl implements CheckItemService {
             throw new CheckItemDeleteFailException();
         }
         checkItemDao.deleteById(id);
+    }
+
+    public void edit(CheckItem checkItem) {
+        checkItemDao.edit(checkItem);
+    }
+
+    public CheckItem findById(Integer id) {
+        return checkItemDao.findById(id);
+    }
+
+    public List<CheckItem> findAll() {
+        return checkItemDao.findAll();
     }
 }

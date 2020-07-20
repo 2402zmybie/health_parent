@@ -11,3 +11,15 @@ el-dialog:
 
 com.alibaba.dubbo.config.annotation.Service  @Service  dubbo服务注解
 com.alibaba.dubbo.config.annotation.Reference @Reference  引用dubbo服务
+
+
+mysql得到刚才插入数据的id: LAST_INSERT_ID()为mysql的函数
+    <insert id="add" parameterType="com.hr.pojo.CheckGroup">
+            /*得到插入数据数据库列的自增id, 封装到CheckGroup的id属性中*/
+            <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+                select LAST_INSERT_ID()
+            </selectKey>
+            insert into t_checkgroup(code,name,helpCode,sex,remark,attention)
+                values
+             (#{code},#{name},#{helpCode},#{sex},#{remark},#{attention})
+    </insert>

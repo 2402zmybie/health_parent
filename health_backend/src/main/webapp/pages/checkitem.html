@@ -230,6 +230,32 @@
             methods: {
                 //编辑
                 handleEdit() {
+                    //编辑确定按钮 进行表单校验后提交数据
+                    this.$refs['dataEditForm'].validate((vali) => {
+                        if(vali) {
+                            //表单校验成功
+                            axios.post("/checkitem/edit.do",this.formData).then((res) => {
+                                if(res.data.flag) {
+                                    //请求成功
+                                    this.$message({
+                                        type:'success',
+                                        message: res.data.message
+                                    })
+                                }else {
+                                    this.$message.error(res.data.message)
+                                }
+                            }).finally(() => {
+                                //axios不管请求成不成功, 都会走finally
+                                //重新请求分页数据
+                                this.findPage();
+                                //隐藏编辑窗口
+                                this.dialogFormVisible4Edit = false;
+                            })
+                        }else {
+                            this.$message.error("表单数据校验不通过");
+                            return false;
+                        }
+                    })
                 },
                 //添加
                 handleAdd () {
@@ -280,8 +306,18 @@
                     this.resetForm();
                     this.dialogFormVisible = true;
                 },
-                // 弹出编辑窗口
+                // 弹出编辑窗口(编辑修改)
                 handleUpdate(row) {
+                    this.dialogFormVisible4Edit = true;
+                    axios.get("/checkitem/findById.do?id=" + row.id)
+                        .then((res) => {
+                            if(res.data.flag) {
+                                //进行回显, 基于VUE的数据绑定实现
+                                this.formData = res.data.data;
+                            }else {
+                                this.$message.error(res.data.message)
+                            }
+                        });
                 },
                 //切换页码
                 handleCurrentChange(currentPage) {
