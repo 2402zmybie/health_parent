@@ -388,6 +388,27 @@
                 },
                 // 删除
                 handleDelete(row) {
+                    this.$confirm("确定要删除该检查组吗?","提示", {
+                        type: 'warning'
+                    }).then(() => {
+                        axios.get("/checkgroup/delete.do?id=" + row.id).then((res) => {
+                            if(res.data.flag) {
+                                this.$message({
+                                    type:'success',
+                                    message: res.data.message
+                                })
+                            }else {
+                                this.$message.error(res.data.message);
+                            }
+                        }).finally(() => {
+                            this.findPage();
+                        })
+                    }).catch(() => {
+                        this.$message({
+                            type:'info',
+                            message:'操作已经取消'
+                        })
+                    })
                 }
             }
         })

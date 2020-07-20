@@ -16,4 +16,6 @@ public interface CheckGroupService {
     List<Integer> findCheckItemIdsByCheckGroupid(Integer id);
 
     void eidt(CheckGroup checkGroup, Integer[] checkitemIds);
+
+    void delete(Integer id);
 }

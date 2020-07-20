@@ -71,4 +71,12 @@ public class CheckGroupServiceImpl implements CheckGroupService {
             }
         }
     }
+
+
+    public void delete(Integer id) {
+        //删除中间表 group_id 为id的数据
+        checkGroupDao.deleteAssoication(id);
+        //删除group表
+        checkGroupDao.deleteGroupById(id);
+    }
 }
