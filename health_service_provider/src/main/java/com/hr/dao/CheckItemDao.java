@@ -10,4 +10,8 @@ public interface CheckItemDao {
     Long findCountByCheckItemid(Integer id);
 
     void deleteById(Integer id);
+
+    void edit(CheckItem checkItem);
+
+    CheckItem findById(Integer id);
 }
