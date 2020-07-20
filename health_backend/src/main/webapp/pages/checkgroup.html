@@ -285,15 +285,55 @@
                 },
                 //添加
                 handleAdd () {
+                    this.dialogFormVisible = false;
+                    //新增检查组和检查组勾选的检查项
+                    axios.post("/checkgroup/add.do?checkitemIds=" + this.checkitemIds,this.formData).then((res) => {
+                        if(res.data.flag) {
+                            this.$message({
+                                type:'success',
+                                message: res.data.message
+                            })
+                        }else {
+                            this.$message.error(res.data.message);
+                        }
+                    }).finally(() => {
+                        //无论新增成功还是失败, 重新进行分页查询
+                        this.findPage()
+                    })
                 },
                 //分页查询
                 findPage() {
+                    //封装分页参数 查询检查组结果
+                    var param = {
+                        currentPage: this.pagination.currentPage,
+                        pageSize: this.pagination.pageSize,
+                        queryString: this.pagination.queryString,
+                    }
+                    axios.post("/checkgroup/findPage.do",param).then((res) => {
+                        this.dataList = res.data.rows;
+                        this.pagination.total = res.data.total;
+                    })
                 },
                 // 重置表单
                 resetForm() {
+                    this.formData = {};
+
                 },
                 // 弹出添加窗口
                 handleCreate() {
+                    this.resetForm();
+                    this.dialogFormVisible = true;
+                    this.activeName = 'first';  //默认选中first对应的标签页
+                    this.checkitemIds = [];  //重置复选框
+                    //发送ajax请求,查询所有的检查项信息, 转为json,赋值给tableData
+                    axios.get("/checkitem/findAll.do")
+                        .then((res) => {
+                            if(res.data.flag) {
+                                this.tableData = res.data.data;
+                            }else {
+                                this.$message.error(res.data.message);
+                            }
+                        })
                 },
                 // 弹出编辑窗口
                 handleUpdate(row) {

@@ -5,6 +5,8 @@ import com.hr.entity.PageResult;
 import com.hr.entity.QueryPageBean;
 import com.hr.pojo.CheckItem;
 
+import java.util.List;
+
 public interface CheckItemService {
 
 
@@ -17,4 +19,6 @@ public interface CheckItemService {
     void edit(CheckItem checkItem);
 
     CheckItem findById(Integer id);
+
+    List<CheckItem> findAll();
 }

@@ -2,6 +2,8 @@ package com.hr.dao;
 import com.github.pagehelper.Page;
 import com.hr.pojo.CheckItem;
 
+import java.util.List;
+
 public interface CheckItemDao {
     void add(CheckItem checkItem);
 
@@ -14,4 +16,6 @@ public interface CheckItemDao {
     void edit(CheckItem checkItem);
 
     CheckItem findById(Integer id);
+
+    List<CheckItem> findAll();
 }

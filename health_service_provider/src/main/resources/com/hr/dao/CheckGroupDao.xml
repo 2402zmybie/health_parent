@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.hr.dao.CheckGroupDao">
+    <insert id="add" parameterType="com.hr.pojo.CheckGroup">
+        /*得到插入数据数据库列的自增id, 封装到CheckGroup的id属性中*/
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into t_checkgroup(code,name,helpCode,sex,remark,attention)
+            values
+            (#{code},#{name},#{helpCode},#{sex},#{remark},#{attention})
+    </insert>
+
+    <insert id="setCheckGroupAndCheckItem" parameterType="java.util.Map">
+        insert into t_checkgroup_checkitem(checkgroup_id,checkitem_id)
+        values
+        (#{checkgroup_id}, #{checkitem_id})
+    </insert>
+
+    <select id="findByCondition" parameterType="string" resultType="com.hr.pojo.CheckGroup">
+        select * from t_checkgroup
+        <if test="queryString != null and queryString != ''">
+            where code = #{queryString} or name = #{queryString} or helpCode = #{queryString}
+        </if>
+    </select>
+
+</mapper>
