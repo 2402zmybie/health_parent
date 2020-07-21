@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
+import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
@@ -47,6 +48,30 @@ public class QiNiuTest {
             } catch (QiniuException ex2) {
                 //ignore
             }
+        }
+
+    }
+
+
+    @Test
+    public void test2() {
+        //构造一个带指定 Region 对象的配置类
+        Configuration cfg = new Configuration(Zone.zone2());
+//...其他参数参考类注释
+
+        String accessKey = "5WAIpev4m_srXLKU68KddKxPZP7r9PaP-MRnmzvB";
+        String secretKey = "Qo_H_VzpR2jFJK224tLghtHXu1IRssaMsyjO7NtR";
+        String bucket = "hr-health-space-1";
+        String key = "abc.jpg";
+
+        Auth auth = Auth.create(accessKey, secretKey);
+        BucketManager bucketManager = new BucketManager(auth, cfg);
+        try {
+            bucketManager.delete(bucket, key);
+        } catch (QiniuException ex) {
+            //如果遇到异常，说明删除失败
+            System.err.println(ex.code());
+            System.err.println(ex.response.toString());
         }
 
     }
