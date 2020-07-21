@@ -79,4 +79,8 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         //删除group表
         checkGroupDao.deleteGroupById(id);
     }
+
+    public List<CheckGroup> findAll() {
+        return checkGroupDao.findAll();
+    }
 }
