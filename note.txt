@@ -28,3 +28,11 @@ mysql得到刚才插入数据的id: LAST_INSERT_ID()为mysql的函数
                 values
              (#{code},#{name},#{helpCode},#{sex},#{remark},#{attention})
     </insert>
+
+
+使用redis来删除七牛云上不关联套餐的图片:
+    setmealPicResources: 用户上传图片的集合
+    setmealPicDbResources: 用户在数据库中关联套餐的图片集合
+
+
+开源框架 Quartz: 定时任务组件
