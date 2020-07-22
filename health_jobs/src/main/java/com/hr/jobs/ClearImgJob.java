@@ -14,6 +14,7 @@ public class ClearImgJob {
     private JedisPool jedisPool;
 
     public void clearImg() {
+        System.out.println("执行定时任务方法");
         //根据redis中保存的两个set集合进行差值运算,获得垃圾图片的集合
         Set<String> set = jedisPool.getResource().sdiff(RedisConstant.SETMEAL_PIC_RESOURCES, RedisConstant.SETMEAL_PIC_DB_RESOURCES);
         if(set != null) {
@@ -22,6 +23,7 @@ public class ClearImgJob {
                 QiniuUtils.deleteFileFromQiniu(picName);
                 //从Redis集合中删除图片名称
                 jedisPool.getResource().srem(RedisConstant.SETMEAL_PIC_RESOURCES,picName);
+                System.out.println("自定义任务执行,清理垃圾图片" + picName);
             }
         }
     }
