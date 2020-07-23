@@ -30,4 +30,7 @@
         select * from t_setmeal
     </select>
 
+    <!--根据套餐ID查询套餐详情,(包含套餐基本信息,检查组信息,检查项信息)-->
+    <select id="findById" parameterType="int"
+
 </mapper>

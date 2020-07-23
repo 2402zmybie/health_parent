@@ -65,4 +65,9 @@ public class SetMealServiceImpl implements SetMealService {
     public List<Setmeal> findAll() {
         return setMealDao.findAll();
     }
+
+    //查询套餐的详细信息, 包括检查组,检查项
+    public Setmeal findById(int id) {
+        return setMealDao.findById(id);
+    }
 }
