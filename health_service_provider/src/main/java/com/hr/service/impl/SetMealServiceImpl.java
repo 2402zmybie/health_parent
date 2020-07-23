@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import redis.clients.jedis.JedisPool;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service(interfaceClass = SetMealService.class)
@@ -47,6 +48,7 @@ public class SetMealServiceImpl implements SetMealService {
         return new PageResult(setmealPage.getTotal(),setmealPage.getResult());
     }
 
+
     private void setMealAndCheckGroup(Integer[] checkgroupIds, Integer id) {
         if(checkgroupIds != null && checkgroupIds.length > 0) {
             for(Integer checkgroupId : checkgroupIds) {
@@ -58,5 +60,9 @@ public class SetMealServiceImpl implements SetMealService {
                 setMealDao.addSetMealCheckGroup(map);
             }
         }
+    }
+
+    public List<Setmeal> findAll() {
+        return setMealDao.findAll();
     }
 }

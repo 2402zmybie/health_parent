@@ -26,4 +26,8 @@
         </if>
     </select>
 
+    <select id="findAll" resultType="com.hr.pojo.Setmeal">
+        select * from t_setmeal
+    </select>
+
 </mapper>
