@@ -18,7 +18,7 @@ public class POITest {
     @Test
     public void test1() throws IOException {
         //获得表格(工作薄)
-        XSSFWorkbook excel = new XSSFWorkbook(new FileInputStream(new File("D:\\ordersetting_template.xlsx")));
+        XSSFWorkbook excel = new XSSFWorkbook(new FileInputStream(new File("E:\\ordersetting_template.xlsx")));
         //读取excel中第一个Sheet页 (工作表)
         XSSFSheet sheet = excel.getSheetAt(0);
         for (Row row : sheet) {
@@ -35,7 +35,7 @@ public class POITest {
     @Test
     public void test2() throws IOException {
         //获得表格(工作薄)
-        XSSFWorkbook excel = new XSSFWorkbook(new FileInputStream(new File("D:\\hellow.xlsx")));
+        XSSFWorkbook excel = new XSSFWorkbook(new FileInputStream(new File("E:\\hellow.xlsx")));
         //读取excel中第一个Sheet页 (工作表)
         XSSFSheet sheet = excel.getSheetAt(0);
         //当前Sheet表中最后一个行号 注意:行号从0开始
@@ -74,7 +74,7 @@ public class POITest {
             }
         }
         //创建输出流, 将内存中的excel输出到磁盘
-        FileOutputStream out = new FileOutputStream(new File("D:\\hellow.xlsx"));
+        FileOutputStream out = new FileOutputStream(new File("E:\\hellow.xlsx"));
         excel.write(out);
         out.flush();
         excel.close();

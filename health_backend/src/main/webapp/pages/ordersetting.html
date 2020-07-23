@@ -140,6 +140,37 @@
             methods: {
 				//预约设置
                 handleOrderSet(day){
+                    this.$prompt('请输入可预约人数', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        inputPattern: /^[0-9]*[1-9][0-9]*$/,
+                        inputErrorMessage: '只能输入正整数'
+                    }).then(({ value }) => {
+                        //发送ajax请求,将输入的人数提交到Controller
+                        axios.post("/ordersetting/editNumberByDate.do", {
+                            number: value,
+                            orderDate: this.formatDate(day.getFullYear(),day.getMonth() + 1,day.getDate())
+                        }).then((res) => {
+                            if(res.data.flag) {
+                                //修改成功
+                                this.$message({
+                                    type:'success',
+                                    message: res.data.message
+                                })
+                            }else {
+                                this.$message.error(res.data.message)
+                            }
+                        }).finally(() => {
+                            //重新拉取数据
+                            this.initData(this.formatDate(day.getFullYear(),day.getMonth() + 1,1))
+                        })
+
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '取消输入'
+                        });
+                    });
                 },
 				//上传之前进行文件格式校验
                 beforeUpload(file){
@@ -230,6 +261,16 @@
                         { date: 6, number: 120, reservations: 1 },
                         { date: 8, number: 120, reservations: 1 }
                     ];*/
+
+                    //发送ajax请求,根据当前页面对应的月份查询数据库,封装成响应的结果赋值给leftobj模型数据
+                    axios.get("/ordersetting/getOrderSettingByMonth.do?date=" + this.currentYear + "-" + this.currentMonth).then((res) => {
+                        if(res.data.flag) {
+                            this.leftobj = res.data.data;
+                        }else {
+                            this.$message.error(res.data.message);
+                        }
+                    })
+
                 },
 				//切换到当前月份
                 goCurrentMonth: function (year, month) {
