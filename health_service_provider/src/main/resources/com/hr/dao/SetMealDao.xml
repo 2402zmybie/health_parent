@@ -31,6 +31,32 @@
     </select>
 
     <!--根据套餐ID查询套餐详情,(包含套餐基本信息,检查组信息,检查项信息)-->
-    <select id="findById" parameterType="int"
+    <select id="findById" parameterType="int" resultMap="findByIdResultMap">
+        select * from t_setmeal where id = #{id}
+    </select>
+
+    <!-- 基本映射,可以被继承的-->
+    <resultMap id="baseResultMap" type="com.hr.pojo.Setmeal">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="helpCode" property="helpCode"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="price" property="price"/>
+        <result column="remark" property="remark"/>
+        <result column="attention" property="attention"/>
+        <result column="img" property="img"/>
+    </resultMap>
+
+    <resultMap id="findByIdResultMap" type="com.hr.pojo.Setmeal" extends="baseResultMap">
+    <!--多对多映射-->
+        <collection
+                property="checkGroups"
+                ofType="com.hr.pojo.CheckGroup"
+                select="com.hr.dao.CheckGroupDao.findCheckGroupById"
+                column="id">
+        </collection>
+    </resultMap>
 
 </mapper>
