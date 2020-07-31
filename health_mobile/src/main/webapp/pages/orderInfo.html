@@ -107,18 +107,63 @@
                     setmeal:{},//套餐信息
                     orderInfo:{
                         setmealId:id,
-                        sex:'1'
+                        sex:'1',
+                        telephone: '13812345678',
+                        validateCode: '1234',
+                        idCard: '123456789123456'
                     }//预约信息
                 },
                 methods:{
                     //发送验证码
                     sendValidateCode(){
+                        //获取用户输入的手机号
+                        var telephone = this.orderInfo.telephone;
+                        alert(telephone);
+                        //调动校验
+                        if(!checkTelephone(telephone)) {
+                            this.$message.error("输入手机号不合法")
+                            return false;
+                        }
+                        //在按钮上显示30秒倒计时效果
+                        //锁定按钮对象并赋值
+                        validateCodeButton = $("#validateCodeButton")[0];
+                        clock = window.setInterval(doLoop,1000)
+                        //发送ajax请求, 为用户发送手机验证码
+                        axios.post("/validateCode/send4Order.do?telephone=" + telephone)
+                            .then((res) => {
+                                if(!res.data.flag) {
+                                    //短信验证码发送失败
+                                    this.$message.error(res.data.message)
+                                }
+                            })
                     },
                     //提交预约
                     submitOrder(){
+                        //对用户输入的身份证号进行校验
+                        var idCard = this.orderInfo.idCard;
+                        if(!checkIdCard(idCard)) {
+                            this.$message.error("身份证号码输入错误,请重新输入")
+                            return false;
+                        }
+                        //发送ajax请求
+                        axios.post("/order/submit.do",this.orderInfo).then((res) => {
+                            if(res.data.flag) {
+                                //预约成功,跳转到成功页面
+                                window.location.href = "orderSuccess.html?orderId=" + res.data.data;
+                            }else {
+                                this.$message.error(res.data.message)
+                            }
+                        })
                     }
                 },
-                mounted(){
+                created(){
+                    //发送ajax请求,根据套餐ID查询套餐信息,用于页面展示
+                    axios.post("/setmeal/findById.do?id=" + id).then((res) => {
+                        if(response.data.flag){
+                            this.setmeal = response.data.data;
+                            this.imgUrl = 'http://qdrvky5ta.bkt.clouddn.com/' + this.setmeal.img;
+                        }
+                    })
                 }
             });
         </script>
