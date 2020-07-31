@@ -35,6 +35,25 @@ public class ValidateCodeController {
         //将验证码保存在本地   13812345678001
         jedisPool.getResource().setex(telephone + RedisMessageConstant.SENDTYPE_ORDER,5 * 60,code);
         return new Result(true,MessageConstant.SEND_VALIDATECODE_SUCCESS);
+    }
 
+
+
+    @RequestMapping("/send4Login")
+    public Result send4Login(@RequestParam(name = "telephone",required = true) String telephone) {
+        //设置验证码(实际开发是随机生成的6位验证码)
+        String code = "123456";
+        //给用户发送验证码
+//        try {
+//            //阿里云发送短信验证码的工具类
+//            SMSUtils.sendShortMessage(SMSUtils.VALIDATE_CODE,telephone,code);
+//
+//        } catch (ClientException e) {
+//            e.printStackTrace();
+//            return new Result(false, MessageConstant.SEND_VALIDATECODE_FAIL);
+//        }
+        //将验证码保存在本地   13812345678002
+        jedisPool.getResource().setex(telephone + RedisMessageConstant.SENDTYPE_LOGIN,5 * 60,code);
+        return new Result(true,MessageConstant.SEND_VALIDATECODE_SUCCESS);
     }
 }
