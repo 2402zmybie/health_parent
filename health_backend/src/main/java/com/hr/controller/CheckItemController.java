@@ -9,6 +9,7 @@ import com.hr.entity.QueryPageBean;
 import com.hr.entity.Result;
 import com.hr.pojo.CheckItem;
 import com.hr.service.CheckItemService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,6 +45,8 @@ public class CheckItemController {
         return pageResult;
     }
 
+    //增加权限校验, 删除
+    @PreAuthorize("hasAuthority('CHECKITEM_DELETE')")
     @RequestMapping("/delete.do")
     public Result delete(@RequestParam(name = "id",required = true) Integer id) {
         try {

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.hr.dao.PermissionDao">
+    <!--根据用户ID查询关联的角色-->
+    <select id="findByRoleId" parameterType="int" resultType="com.hr.pojo.Permission">
+        SELECT p.*
+        FROM t_role_permission rp, t_permission p
+        WHERE role_id = #{roleId}
+        AND rp.permission_id = p.id
+    </select>
+</mapper>

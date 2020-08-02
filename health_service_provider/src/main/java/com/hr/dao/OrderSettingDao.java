@@ -8,9 +8,9 @@ import java.util.Map;
 
 public interface OrderSettingDao {
 
-    public void add(OrderSetting orderSetting);
-    public void editNumberByOrderDate(OrderSetting orderSetting);
-    public long findCountByOrderDate(Date orderDate);
+    void add(OrderSetting orderSetting);
+    void editNumberByOrderDate(OrderSetting orderSetting);
+    long findCountByOrderDate(Date orderDate);
 
     List<OrderSetting> getOrderSettingByMonth(Map map);
 

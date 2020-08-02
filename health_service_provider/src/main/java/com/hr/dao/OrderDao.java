@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 public interface OrderDao {
-    public void add(Order order);
-    public List<Order> findByCondition(Order order);
-    public Map findById4Detail(Integer id);
-    public Integer findOrderCountByDate(String date);
-    public Integer findOrderCountAfterDate(String date);
-    public Integer findVisitsCountByDate(String date);
-    public Integer findVisitsCountAfterDate(String date);
-    public List<Map> findHotSetmeal();
+    void add(Order order);
+    List<Order> findByCondition(Order order);
+    Map findById4Detail(Integer id);
+    Integer findOrderCountByDate(String date);
+    Integer findOrderCountAfterDate(String date);
+    Integer findVisitsCountByDate(String date);
+    Integer findVisitsCountAfterDate(String date);
+    List<Map> findHotSetmeal();
 }

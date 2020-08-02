@@ -7,15 +7,15 @@ import com.hr.pojo.Member;
 import java.util.List;
 
 public interface MemberDao {
-    public List<Member> findAll();
-    public Page<Member> selectByCondition(String queryString);
-    public void add(Member member);
-    public void deleteById(Integer id);
-    public Member findById(Integer id);
-    public Member findByTelephone(String telephone);
-    public void edit(Member member);
-    public Integer findMemberCountBeforeDate(String date);
-    public Integer findMemberCountByDate(String date);
-    public Integer findMemberCountAfterDate(String date);
-    public Integer findMemberTotalCount();
+    List<Member> findAll();
+    Page<Member> selectByCondition(String queryString);
+    void add(Member member);
+    void deleteById(Integer id);
+    Member findById(Integer id);
+    Member findByTelephone(String telephone);
+    void edit(Member member);
+    Integer findMemberCountBeforeDate(String date);
+    Integer findMemberCountByDate(String date);
+    Integer findMemberCountAfterDate(String date);
+    Integer findMemberTotalCount();
 }
