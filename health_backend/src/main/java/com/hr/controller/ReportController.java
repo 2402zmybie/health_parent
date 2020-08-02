@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.hr.constant.MessageConstant;
 import com.hr.entity.Result;
 import com.hr.service.MemberSerivce;
+import com.hr.service.SetMealService;
 import com.hr.utils.DateUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,8 @@ public class ReportController {
 
     @Reference
     private MemberSerivce memberSerivce;
+    @Reference
+    private SetMealService setMealService;
 
     //会员数量折线图数据
     @RequestMapping("/getMemberReport")
@@ -39,5 +42,27 @@ public class ReportController {
         List<Integer> memberCountList = memberSerivce.findMemberCountByMonths(monthList);
         map.put("memberCount",memberCountList);
         return new Result(true, MessageConstant.GET_MEMBER_NUMBER_REPORT_SUCCESS,map);
+    }
+
+
+    @RequestMapping("/getSetmealReport")
+    public Result getSetmealReport() throws Exception {
+        Map map = new HashMap();
+        try {
+            List<Map<String,Object>> setmealCountList = setMealService.findSetmealCount();
+            map.put("setmealCount",setmealCountList);
+
+            List<String> setMealNames = new ArrayList<String>();
+            for (Map<String, Object> objectMap : setmealCountList) {
+                String name = (String) objectMap.get("name");
+                setMealNames.add(name);
+            }
+            map.put("setmealNames", setMealNames);
+
+            return new Result(true, MessageConstant.GET_SETMEAL_COUNT_REPORT_SUCCESS,map);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.GET_SETMEAL_COUNT_REPORT_FAIL);
+        }
     }
 }

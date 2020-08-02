@@ -59,4 +59,14 @@
         </collection>
     </resultMap>
 
+
+    <select id="findSetmealCount" resultType="map">
+        SELECT m.name name,sc.c value
+            FROM t_setmeal m,
+            (SELECT o.setmeal_id sid,COUNT(*) c
+            FROM t_order o
+            GROUP BY o.setmeal_id) sc
+            WHERE sc.sid = m.id
+    </select>
+
 </mapper>

@@ -70,4 +70,9 @@ public class SetMealServiceImpl implements SetMealService {
     public Setmeal findById(int id) {
         return setMealDao.findById(id);
     }
+
+    //查询套餐预约占比数据
+    public List<Map<String, Object>> findSetmealCount() {
+        return setMealDao.findSetmealCount();
+    }
 }
